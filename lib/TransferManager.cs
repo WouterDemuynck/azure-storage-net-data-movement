@@ -1196,7 +1196,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement
                 transfer.BlobType = options.BlobType;
             }
 
-            await DoTransfer(transfer, context, cancellationToken);
+            await DoTransfer(transfer, context, cancellationToken).ConfigureAwait(false);
 
             return TransferManager.CreateTransferSummary(transfer.ProgressTracker);
         }
@@ -1215,7 +1215,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement
                 transfer.SourceEnumerator = sourceEnumerator;
             }
 
-            await DoTransfer(transfer, context, cancellationToken);
+            await DoTransfer(transfer, context, cancellationToken).ConfigureAwait(false);
 
             return TransferManager.CreateTransferSummary(transfer.ProgressTracker);
         }
@@ -1235,7 +1235,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement
                 transfer.Delimiter = options.Delimiter;
             }
 
-            await DoTransfer(transfer, context, cancellationToken);
+            await DoTransfer(transfer, context, cancellationToken).ConfigureAwait(false);
 
             return TransferManager.CreateTransferSummary(transfer.ProgressTracker);
         }
@@ -1260,7 +1260,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement
 
                 try
                 {
-                    await transfer.ExecuteAsync(scheduler, cancellationToken);
+                    await transfer.ExecuteAsync(scheduler, cancellationToken).ConfigureAwait(false);
                 }
                 finally
                 {

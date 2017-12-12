@@ -110,15 +110,15 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
         {
             if (!this.reader.PreProcessed && this.reader.HasWork)
             {
-                await this.reader.DoWorkInternalAsync();
+                await this.reader.DoWorkInternalAsync().ConfigureAwait(false);
             }
             else if (this.reader.PreProcessed && this.writer.HasWork)
             {
-                await this.writer.DoWorkInternalAsync();
+                await this.writer.DoWorkInternalAsync().ConfigureAwait(false);
             }
             else if (this.writer.PreProcessed && this.reader.HasWork)
             {
-                await this.reader.DoWorkInternalAsync();
+                await this.reader.DoWorkInternalAsync().ConfigureAwait(false);
             }
 
             return this.ErrorOccurred || this.writer.IsFinished;

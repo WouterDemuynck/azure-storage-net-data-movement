@@ -94,13 +94,13 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
             switch (this.state)
             {
                 case State.OpenOutputStream:
-                    await HandleOutputStreamAsync();
+                    await HandleOutputStreamAsync().ConfigureAwait(false);
                     break;
                 case State.CalculateMD5:
-                    await CalculateMD5Async();
+                    await CalculateMD5Async().ConfigureAwait(false);
                     break;
                 case State.Write:
-                    await this.WriteChunkDataAsync();
+                    await this.WriteChunkDataAsync().ConfigureAwait(false);
                     break;
                 default:
                     break;
@@ -232,7 +232,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
 
                 this.PreProcessed = true;
                 this.hasWork = true;
-            });
+            }).ConfigureAwait(false);
         }
 
         private Task CalculateMD5Async()
@@ -284,7 +284,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
                     transferData.MemoryBuffer,
                     0,
                     transferData.Length,
-                    this.CancellationToken);
+                    this.CancellationToken).ConfigureAwait(false);
 
                 // If MD5HashTransformBlock returns false, it means some error happened in md5HashStream to calculate MD5.
                 // then exception was already thrown out there, don't do anything more here.

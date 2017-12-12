@@ -197,7 +197,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement
             }
 
             this.nameResolver = GetNameResolver(this.Source, this.Destination, this.Delimiter);
-            await base.ExecuteAsync(scheduler, cancellationToken);
+            await base.ExecuteAsync(scheduler, cancellationToken).ConfigureAwait(false);
         }
 
         private static TransferLocation GetSourceTransferLocation(TransferLocation dirLocation, TransferEntry entry)

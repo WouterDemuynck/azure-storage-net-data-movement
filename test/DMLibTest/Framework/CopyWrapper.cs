@@ -19,11 +19,11 @@ namespace DMLibTest
         {
             if (item.IsDirectoryTransfer)
             {
-                return await this.CopyDirectory(item.SourceObject, item.DestObject, item);
+                return await this.CopyDirectory(item.SourceObject, item.DestObject, item).ConfigureAwait(false);
             }
             else
             {
-                await this.Copy(item.SourceObject, item.DestObject, item);
+                await this.Copy(item.SourceObject, item.DestObject, item).ConfigureAwait(false);
                 return null;
             }
         }

@@ -22,11 +22,11 @@ namespace DMLibTest
         {
             if (item.IsDirectoryTransfer)
             {
-                return await this.UploadDirectory(item.DestObject, item);
+                return await this.UploadDirectory(item.DestObject, item).ConfigureAwait(false);
             }
             else
             {
-                await this.Upload(item.DestObject, item);
+                await this.Upload(item.DestObject, item).ConfigureAwait(false);
                 return null;
             }
         }

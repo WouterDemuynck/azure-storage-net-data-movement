@@ -119,7 +119,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
                 Utils.GenerateConditionWithCustomerCondition(this.destLocation.AccessCondition),
                 Utils.GenerateFileRequestOptions(this.destLocation.FileRequestOptions),
                 Utils.GenerateOperationContext(this.TransferContext),
-                this.CancellationToken);
+                this.CancellationToken).ConfigureAwait(false);
 
             return this.destFile.CopyState;
         }
@@ -137,7 +137,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
                 Utils.GenerateConditionWithCustomerCondition(this.destLocation.AccessCondition),
                 Utils.GenerateFileRequestOptions(this.destLocation.FileRequestOptions),
                 Utils.GenerateOperationContext(this.TransferContext),
-                this.CancellationToken);
+                this.CancellationToken).ConfigureAwait(false);
             }
 
             if (!originalMetadata.DictionaryEquals(this.destFile.Metadata))
@@ -146,7 +146,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
                     Utils.GenerateConditionWithCustomerCondition(this.destLocation.AccessCondition),
                     Utils.GenerateFileRequestOptions(this.destLocation.FileRequestOptions),
                     Utils.GenerateOperationContext(this.TransferContext),
-                    this.CancellationToken);
+                    this.CancellationToken).ConfigureAwait(false);
             }
         }
     }

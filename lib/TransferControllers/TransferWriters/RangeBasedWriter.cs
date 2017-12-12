@@ -88,16 +88,16 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
             switch (this.state)
             { 
                 case State.FetchAttributes:
-                    await this.FetchAttributesAsync();
+                    await this.FetchAttributesAsync().ConfigureAwait(false);
                     break;
                 case State.Create:
-                    await this.CreateAsync();
+                    await this.CreateAsync().ConfigureAwait(false);
                     break;
                 case State.Upload:
-                    await this.UploadAsync();
+                    await this.UploadAsync().ConfigureAwait(false);
                     break;
                 case State.Commit:
-                    await this.CommitAsync();
+                    await this.CommitAsync().ConfigureAwait(false);
                     break;
                 case State.Error:
                 case State.Finished:
@@ -137,7 +137,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
             {
                 try
                 {
-                    await this.DoFetchAttributesAsync();
+                    await this.DoFetchAttributesAsync().ConfigureAwait(false);
                 }
 #if EXPECT_INTERNAL_WRAPPEDSTORAGEEXCEPTION
                 catch (Exception e) when (e is StorageException || (e is AggregateException && e.InnerException is StorageException))
@@ -213,7 +213,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
 
             this.hasWork = false;
 
-            await this.DoCreateAsync(this.SharedTransferData.TotalLength);
+            await this.DoCreateAsync(this.SharedTransferData.TotalLength).ConfigureAwait(false);
 
             this.InitUpload();
         }
@@ -278,7 +278,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
             {
                 using (transferData)
                 {
-                    await this.UploadChunkAsync(transferData);
+                    await this.UploadChunkAsync(transferData).ConfigureAwait(false);
                 }
             }
         }
@@ -330,7 +330,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
                 {
                     transferData.Stream = new ChunkedMemoryStream(transferData.MemoryBuffer, 0, transferData.Length);
                 }
-                await this.WriteRangeAsync(transferData);
+                await this.WriteRangeAsync(transferData).ConfigureAwait(false);
             }
 
             this.FinishChunk(transferData);
@@ -386,7 +386,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
 
             this.hasWork = false;
 
-            await this.DoCommitAsync();
+            await this.DoCommitAsync().ConfigureAwait(false);
             
             this.SetFinished();
         }

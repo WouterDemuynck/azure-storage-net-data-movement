@@ -194,7 +194,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement
 
             try
             {
-                await scheduler.ExecuteJobAsync(this.transferJob, cancellationToken);
+                await scheduler.ExecuteJobAsync(this.transferJob, cancellationToken).ConfigureAwait(false);
                 this.UpdateTransferJobStatus(this.transferJob, TransferJobStatus.Finished);
 
                 eventArgs.EndTime = DateTime.UtcNow;

@@ -66,7 +66,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
                 null,
                 Utils.GenerateFileRequestOptions(this.destLocation.FileRequestOptions),
                 Utils.GenerateOperationContext(this.Controller.TransferContext),
-                this.CancellationToken);
+                this.CancellationToken).ConfigureAwait(false);
             this.destExist = true;
         }
 
@@ -82,7 +82,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
                 null,
                 Utils.GenerateFileRequestOptions(this.destLocation.FileRequestOptions, true),
                 Utils.GenerateOperationContext(this.Controller.TransferContext),
-                this.CancellationToken);
+                this.CancellationToken).ConfigureAwait(false);
         }
 
         protected override async Task WriteRangeAsync(TransferData transferData)
@@ -94,7 +94,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
                 null,
                 Utils.GenerateFileRequestOptions(this.destLocation.FileRequestOptions),
                 Utils.GenerateOperationContext(this.Controller.TransferContext),
-                this.CancellationToken);
+                this.CancellationToken).ConfigureAwait(false);
         }
 
         protected override async Task DoCommitAsync()
@@ -108,18 +108,18 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
                     null,
                     fileRequestOptions,
                     operationContext,
-                    this.CancellationToken);
+                    this.CancellationToken).ConfigureAwait(false);
             }
 
             var originalMetadata = new Dictionary<string, string>(this.cloudFile.Metadata);
             Utils.SetAttributes(this.cloudFile, this.SharedTransferData.Attributes);
-            await this.Controller.SetCustomAttributesAsync(this.cloudFile);
+            await this.Controller.SetCustomAttributesAsync(this.cloudFile).ConfigureAwait(false);
 
             await this.cloudFile.SetPropertiesAsync(
                 null,
                 fileRequestOptions,
                 operationContext,
-                this.CancellationToken);
+                this.CancellationToken).ConfigureAwait(false);
 
             if (!originalMetadata.DictionaryEquals(this.cloudFile.Metadata))
             {
@@ -127,7 +127,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
                     null,
                     fileRequestOptions,
                     operationContext,
-                    this.CancellationToken);
+                    this.CancellationToken).ConfigureAwait(false);
             }
         }
     }

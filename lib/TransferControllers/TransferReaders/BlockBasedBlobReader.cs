@@ -85,11 +85,11 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
             {
                 if (!this.PreProcessed)
                 {
-                    await this.FetchAttributeAsync();
+                    await this.FetchAttributeAsync().ConfigureAwait(false);
                 }
                 else
                 {
-                    await this.DownloadBlockBlobAsync();
+                    await this.DownloadBlockBlobAsync().ConfigureAwait(false);
                 }
             }
             catch (Exception)
@@ -129,7 +129,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
                     accessCondition,
                     Utils.GenerateBlobRequestOptions(this.sourceLocation.BlobRequestOptions),
                     Utils.GenerateOperationContext(this.Controller.TransferContext),
-                    this.CancellationToken);
+                    this.CancellationToken).ConfigureAwait(false);
             }
 #if EXPECT_INTERNAL_WRAPPEDSTORAGEEXCEPTION
             catch (Exception ex) when (ex is StorageException || (ex is AggregateException && ex.InnerException is StorageException))
@@ -271,7 +271,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
 
                 using (asyncState)
                 {
-                    await this.DownloadChunkAsync(asyncState);
+                    await this.DownloadChunkAsync(asyncState).ConfigureAwait(false);
                 }
 
                 return;
@@ -310,7 +310,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
                             accessCondition,
                             Utils.GenerateBlobRequestOptions(this.sourceLocation.BlobRequestOptions),
                             Utils.GenerateOperationContext(this.Controller.TransferContext),
-                            this.CancellationToken);
+                            this.CancellationToken).ConfigureAwait(false);
             }
             else
             {
@@ -332,7 +332,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
                                 accessCondition,
                                 Utils.GenerateBlobRequestOptions(this.sourceLocation.BlobRequestOptions),
                                 Utils.GenerateOperationContext(this.Controller.TransferContext),
-                                this.CancellationToken);
+                                this.CancellationToken).ConfigureAwait(false);
 
                     index++;
                     startOffset += length;

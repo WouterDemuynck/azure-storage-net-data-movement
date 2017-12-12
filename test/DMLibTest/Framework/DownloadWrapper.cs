@@ -20,11 +20,11 @@ namespace DMLibTest
         {
             if (item.IsDirectoryTransfer)
             {
-                return await this.DownloadDirectory(item.SourceObject, item);
+                return await this.DownloadDirectory(item.SourceObject, item).ConfigureAwait(false);
             }
             else
             {
-                await this.Download(item.SourceObject, item);
+                await this.Download(item.SourceObject, item).ConfigureAwait(false);
                 return null;
             }
         }

@@ -205,7 +205,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement
 
             try
             {
-                await controller.TaskCompletionSource.Task;
+                await controller.TaskCompletionSource.Task.ConfigureAwait(false);
             }
 #if EXPECT_INTERNAL_WRAPPEDSTORAGEEXCEPTION
             catch (Exception ex) when (ex is StorageException || (ex is AggregateException && ex.InnerException is StorageException))
@@ -427,7 +427,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement
             bool finished = false;
             try
             {
-                finished = await controller.DoWorkAsync();
+                finished = await controller.DoWorkAsync().ConfigureAwait(false);
             }
             finally
             {

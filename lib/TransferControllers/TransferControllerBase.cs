@@ -175,7 +175,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
             try
             {
                 Utils.CheckCancellation(this.CancellationToken);
-                setFinish = await this.DoWorkInternalAsync();
+                setFinish = await this.DoWorkInternalAsync().ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -411,7 +411,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
                 await Task.Run(() =>
                 {
                     this.TransferContext.SetAttributesCallback(dest);
-                });
+                }).ConfigureAwait(false);
             }
         }
     }

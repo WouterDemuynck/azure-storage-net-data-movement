@@ -62,13 +62,13 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
                 switch (this.state)
                 {
                     case State.FetchAttributes:
-                        await this.FetchAttributesAsync();
+                        await this.FetchAttributesAsync().ConfigureAwait(false);
                         break;
                     case State.GetRanges:
-                        await this.GetRangesAsync();
+                        await this.GetRangesAsync().ConfigureAwait(false);
                         break;
                     case State.Download:
-                        await this.DownloadRangeAsync();
+                        await this.DownloadRangeAsync().ConfigureAwait(false);
                         break;
                     default:
                         break;
@@ -134,7 +134,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
 
             try
             {
-                await this.DoFetchAttributesAsync();
+                await this.DoFetchAttributesAsync().ConfigureAwait(false);
             }
 #if EXPECT_INTERNAL_WRAPPEDSTORAGEEXCEPTION
             catch (Exception ex) when (ex is StorageException || (ex is AggregateException && ex.InnerException is StorageException))
@@ -200,7 +200,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
 
             RangesSpan rangesSpan = this.rangesSpanList[spanIndex];
 
-            rangesSpan.Ranges = await this.DoGetRangesAsync(rangesSpan);
+            rangesSpan.Ranges = await this.DoGetRangesAsync(rangesSpan).ConfigureAwait(false);
 
             List<Range> ranges = new List<Range>();
             Range currentRange = null;
@@ -366,7 +366,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
                         DownloadStream = downloadStream
                     };
 
-                    await this.DownloadRangeAsync(rangeBasedDownloadState);
+                    await this.DownloadRangeAsync(rangeBasedDownloadState).ConfigureAwait(false);
                 }
 
                 this.SetChunkFinish();
@@ -407,7 +407,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
 
             if (asyncState.Range.HasData)
             {
-                await this.DoDownloadRangeToStreamAsync(asyncState);
+                await this.DoDownloadRangeToStreamAsync(asyncState).ConfigureAwait(false);
             }
             else
             {

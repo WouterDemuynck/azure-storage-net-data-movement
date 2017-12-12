@@ -94,10 +94,10 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
             switch (this.state)
             {
                 case State.OpenInputStream:
-                    await this.OpenInputStreamAsync();
+                    await this.OpenInputStreamAsync().ConfigureAwait(false);
                     break;
                 case State.ReadStream:
-                    await this.ReadStreamAsync();
+                    await this.ReadStreamAsync().ConfigureAwait(false);
                     break;
                 case State.Error:
                 case State.Finished:
@@ -225,7 +225,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
                         }
                     }
                 }
-            });
+            }).ConfigureAwait(false);
 
             this.SharedTransferData.TotalLength = this.inputStream.Length;
 
@@ -261,7 +261,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
                 await Task.Run(() =>
                 {
                     this.md5HashStream.CalculateMd5(this.Scheduler.MemoryManager, this.Controller.CheckCancellation);
-                });
+                }).ConfigureAwait(false);
             }
 
             this.SetChunkFinish();
@@ -333,7 +333,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
 
                 using (asyncState)
                 {
-                    await this.ReadChunkAsync(asyncState);
+                    await this.ReadChunkAsync(asyncState).ConfigureAwait(false);
                 }
             }
 
@@ -352,7 +352,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
                 asyncState.MemoryBuffer,
                 asyncState.BytesRead,
                 asyncState.Length - asyncState.BytesRead,
-                this.CancellationToken);
+                this.CancellationToken).ConfigureAwait(false);
 
             // If a parallel operation caused the controller to be placed in
             // error state exit early to avoid unnecessary I/O.
@@ -367,7 +367,7 @@ namespace Microsoft.WindowsAzure.Storage.DataMovement.TransferControllers
 
             if (asyncState.BytesRead < asyncState.Length)
             {
-                await this.ReadChunkAsync(asyncState);
+                await this.ReadChunkAsync(asyncState).ConfigureAwait(false);
             }
             else
             {
